@@ -99,63 +99,6 @@ class GARCH:
 
 # Example usage:
 
-import matplotlib.pyplot as plt
-import numpy as np
-
-def generate_gbm_data(S0, mu, sigma, T, dt):
-    """
-    Generates data following a Geometric Brownian Motion (GBM) process.
-
-    Parameters:
-    - S0: Initial stock price
-    - mu: Drift coefficient (expected return)
-    - sigma: Volatility (standard deviation of returns)
-    - T: Total time (in years)
-    - dt: Time step (in years)
-
-    Returns:
-    - time_steps: Array of time steps
-    - prices: Array of simulated prices
-    """
-
-    # Number of steps
-    N = int(T / dt)
-    
-    # Time steps
-    time_steps = np.linspace(0, T, N)
-    
-    # Initialize the price array
-    prices = np.zeros(N)
-    prices[0] = S0
-    
-    # Generate the random component of the motion (Wiener process)
-    W = np.random.normal(0, np.sqrt(dt), N)
-    
-    # Simulate the GBM process
-    for t in range(1, N):
-        prices[t] = prices[t-1] * np.exp((mu - 0.5 * sigma**2) * dt + sigma * W[t])
-
-    return time_steps, prices
-# Parameters
-#Or suppose we have a portfolio, meaning each param is a list.
-S0 = [100,34.4,103,57.1,77]
-mu = [0.05,0.06,0.03,0.04,0.04]
-sigma = [0.6,0.25,0.1,0.15,0.15]
-T = 2.0
-dt = 0.01
-portfolio = []
-for i in range(len(S0)):
-    time_steps,prices = generate_gbm_data(S0[i],mu[i],sigma[i],T,dt)
-    portfolio.append(prices)
-
-returns_i = []
-returns = []
-for j in range(len(portfolio)):
-    for i in range(1,len(prices)):
-        returns_i.append(np.log(prices[i]/prices[i-1]))
-    returns.append(returns_i)
-    returns_i=[]
-
 #print(returns)
 # Fit the GARCH(1,1) model
 returns = np.random.randn(100) / 100  # Simulated returns
@@ -174,3 +117,4 @@ plt.xlabel("Time")
 plt.ylabel("Volatility")
 plt.legend()
 plt.show()
+
